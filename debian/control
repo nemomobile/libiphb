@@ -1,0 +1,50 @@
+Source: libiphb
+Section: misc
+Priority: optional
+Maintainer: Semi Malinen <semi.malinen@nokia.com>
+Uploaders: Matias Muhonen <ext-matias.muhonen@nokia.com>
+Build-Depends: debhelper (>= 4.1.0),
+ libdsme0.2.0-dev (>= 0.61.4),
+ pkg-config,
+ libglib2.0-dev,
+ libdbus-1-dev (>= 1.0),
+ libdbus-glib-1-dev,
+ libtool,
+ autoconf,
+ automake
+Standards-Version: 3.7.2
+
+Package: hbtest
+Architecture: any
+Depends: libiphb0 (>= 0.61.6)
+Description: Test tool for IP Heartbeat service
+ Command line utility to test IP Heartbeat functionality.
+
+Package: hbtest-dbg
+Priority: extra
+Architecture: any
+Depends: hbtest (= ${Source-Version})
+Description: Debug symbols for hbtest
+ This package provides debug symbols for the IP Heartbeat test tool.
+
+Package: libiphb0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: API for IP Heartbeat service
+ This package contains C API for using IP Heartbeat service.
+
+Package: libiphb0-dbg
+Section: libdevel
+Priority: extra
+Architecture: any
+Depends: libiphb0 (= ${Source-Version})
+Description: Debug symbols for libiphb0
+ This package provides debug symbols for the IP Heartbeat API.
+
+Package: libiphb-dev
+Section: libdevel
+Architecture: any
+Depends: libiphb0 (= ${Source-Version}), ${shlibs:Depends}
+Description: Development files for IP Heartbeat service
+ This package contains C headers for the IP Heartbeat API.

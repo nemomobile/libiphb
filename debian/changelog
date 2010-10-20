@@ -1,0 +1,5 @@
+libiphb (0.61.25) unstable; urgency=low
+
+  * Move libiphb to its own source package (Fixes: NB#188832).
+
+ -- Matias Muhonen <ext-matias.muhonen@nokia.com>  Wed, 20 Oct 2010 12:32:13 +0300

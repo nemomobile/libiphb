@@ -11,7 +11,7 @@ AC_CONFIG_SRCDIR([iphbd/libiphb.c])
 #  - If interfaces added: lt_age++
 #  - If Interfaces removed: lt_age=0
 #  - If only code changes (interface untouched): lt_rev++
-iphb_lt_current=0
+iphb_lt_current=1
 iphb_lt_rev=0
 iphb_lt_age=0
 AC_SUBST([IPHB_LT_VERSION],[$iphb_lt_current:$iphb_lt_rev:$iphb_lt_age])

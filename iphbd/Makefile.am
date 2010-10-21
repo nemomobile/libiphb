@@ -22,7 +22,7 @@ hbtest_SOURCES = hbtest.c
 hbtest_LDADD = libiphb.la
 
 libiphb_la_SOURCES = libiphb.c
-libiphb_la_LDFLAGS = $(AM_LDFLAGS) -shared
+libiphb_la_LDFLAGS = $(AM_LDFLAGS) -shared -version-info $(IPHB_LT_VERSION)
 
 iphbdinclude_HEADERS = libiphb.h \
 		       iphb_internal.h

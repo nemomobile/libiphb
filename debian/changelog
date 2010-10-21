@@ -1,4 +1,4 @@
-libiphb (0.61.25) unstable; urgency=low
+libiphb (0.61.26) unstable; urgency=low
 
   * Move libiphb to its own source package (Fixes: NB#188832).
 

@@ -40,6 +40,7 @@
 #endif
 #define HB_LKM_KICK_ME_PERIOD    	"30"				/**@brief Period (seconds) the kernel sends messages to iphbd when IP traffic is seen */
 
+#include <dsme/messages.h>
 
 /**@brief Message from client to iphbd ("wake me up") */
 struct _iphb_wait_req_t {
@@ -73,8 +74,6 @@ struct _iphb_req_t {
   u;
 };
 
-
-#include "dsme/messages.h"
 
 enum {
     DSME_MSG_ENUM(DSM_MSGTYPE_WAIT,   0x00000600),

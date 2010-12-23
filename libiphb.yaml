@@ -2,7 +2,7 @@ Name: libiphb
 Summary: API for IP Heartbeat service
 Version: 0.61.26.p1.gitec5c50d7
 Release: 0
-Group: System/Libraries
+Group: System/System Control
 License: LGPLv2+
 URL: http://meego.gitorious.org/meego-middleware/libiphb
 Description: |

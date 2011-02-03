@@ -188,32 +188,30 @@ iphb_wait(iphb_t iphbh, unsigned short mintime, unsigned short maxtime, int must
   if (!must_wait)
     return (time_t)0;
 
-  if (maxtime) {
-    fd_set 		readfds;
-    struct timeval      timeout;
-    time_t 		then = time(0);
-    time_t 		now;
-    int    		st;
+  fd_set 		readfds;
+  struct timeval      timeout;
+  time_t 		then = time(0);
+  time_t 		now;
+  int    		st;
 
-    timeout.tv_sec = maxtime;
-    timeout.tv_usec = 0;
+  timeout.tv_sec = maxtime;
+  timeout.tv_usec = 0;
 
-    for (;;) {
-      FD_ZERO(&readfds);
-      FD_SET(HB_INST(iphbh)->fd, &readfds);
-      st = select(HB_INST(iphbh)->fd + 1, &readfds, NULL, NULL, &timeout);
-      now = time(0);
-      if (st == -1 && errno == EINTR) {
+  for (;;) {
+    FD_ZERO(&readfds);
+    FD_SET(HB_INST(iphbh)->fd, &readfds);
+    st = select(HB_INST(iphbh)->fd + 1, &readfds, NULL, NULL, &timeout);
+    now = time(0);
+    if (st == -1 && errno == EINTR) {
 	if (now - then < maxtime) {
 	  timeout.tv_sec = maxtime - (now - then);
 	  continue;  
 	}
-      }
-      break;
     }
-    if (st == 0) /* timeout */
-      return now - then;
+    break;
   }
+  if (st == 0) /* timeout */
+    return now - then;
 
   if (recv(HB_INST(iphbh)->fd, &resp, sizeof(resp), MSG_WAITALL) > 0)
     return resp.waited;

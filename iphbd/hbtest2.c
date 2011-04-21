@@ -172,8 +172,9 @@ main (int argc, char *argv[])
           fprintf(stderr, ME "\aERROR, select() did not fire at all!\n");
       }
 
-      printf(ME "woke up, last heartbeat happened %d secs ago\n", 
-	       (int)(now - went_to_sleep));
+      printf(ME "woke up, last heartbeat happened %d secs ago, now is %s", 
+             (int)(now - went_to_sleep),
+             ctime(&now));
     }
   }  
   printf(ME "bye\n");

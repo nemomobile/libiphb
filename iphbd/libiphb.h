@@ -57,6 +57,22 @@ iphb_t iphb_open(int *dummy);
 
 
 
+/**
+   "Global sync" predefined values (slots), see iphb_wait() function.
+   The timeline is divided into fixed" global slots (GS)" (all waiters for a certain slot
+   are woken up at the same time (also the lower-value waiters).
+ */
+#define IPHB_GS_WAIT_30_SEC      30      //!< 30 second wakeup slot
+#define IPHB_GS_WAIT_1_MIN       60      //!< 1 minute wakeup slot, the user of the previous slot wakes here as well
+#define IPHB_GS_WAIT_2_MIN    (2*60)     //!< 2 minute wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_10_MIN  (10*60)     //!< 10 minute wakeup slot, the users of the previous slots wake here as well;
+                                         //      you can use any multiplication of IPHB_GS_WAIT_10_MIN, although it
+                                         //      is recommended to use these predefined values
+#define IPHB_GS_WAIT_30_MIN  (30*60)     //!< 30 minute wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_1_HOUR  (60*60)     //!< 1 hour wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_2_HOURS (2*60*60)   //!< 2 hours wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_10_HOURS (10*60*60) //!< 10 hours wakeup slot, the users of the previous slots wake here as well
+
 
 
 /**
@@ -67,6 +83,9 @@ iphb_t iphb_open(int *dummy);
    @param mintime	Time in seconds that MUST be waited before heartbeat is reacted to.
                         Value 0 means 'wake me up when someboy else is woken'
    @param maxtime	Time in seconds when the wait MUST end. It is wise to have maxtime-mintime quite big so all users of this service get synced.
+                        It is also possible to use "global synchronization" by setting a IPHB_GS_WAIT_* value to
+                        both mintime and maxtime (same value for both) - you will be waken up when the next proper slot 
+                        is fired. 
    @param must_wait	1 if this functions waits for heartbeat, 0 if you are going to use select/poll (see iphb_get_fd) 
 
    @return		Time waited, (time_t)-1 if error (check errno)

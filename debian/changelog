@@ -1,3 +1,12 @@
+libiphb (0.61.29) unstable; urgency=low
+
+  * Fixes: NB#253041 - Add functions to help global synchronisation
+    - Added new #defines
+    - Explained "global synchronization" in iphb_wait() comments (IPHB_WAIT_GS_*)
+    Note that no changes to the actual code has been done - only the new dines added.
+
+ -- Raimo Vuonnala <raimo.vuonnala@nokia.com>  Mon, 09 May 2011 12:26:54 +0300
+
 libiphb (0.61.28) unstable; urgency=low
 
   * Added hbtest2

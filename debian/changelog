@@ -1,6 +1,12 @@
+libiphb (0.61.30) unstable; urgency=low
+
+  * Bump library version (Fixes: NB#253041)
+
+ -- Matias Muhonen <ext-matias.muhonen@nokia.com>  Thu, 12 May 2010 06:45:57 +0300
+
 libiphb (0.61.29) unstable; urgency=low
 
-  * Fixes: NB#253041 - Add functions to help global synchronisation
+  * Add functions to help global synchronisation
     - Added new #defines
     - Explained "global synchronization" in iphb_wait() comments (IPHB_WAIT_GS_*)
     Note that no changes to the actual code has been done - only the new dines added.

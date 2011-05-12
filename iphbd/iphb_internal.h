@@ -6,7 +6,7 @@
    Internal iphb service definitions
 
    <p>
-   Copyright (C) 2008-2010 Nokia. All rights reserved.
+   Copyright (C) 2008-2011 Nokia. All rights reserved.
 
    @author Raimo Vuonnala <raimo.vuonnala@nokia.com>
    @author Semi Malinen <semi.malinen@nokia.com>

@@ -6,7 +6,7 @@
    Implementation of libiphb (see libiphb.h)
 
    <p>
-   Copyright (C) 2008-2010 Nokia Corporation.
+   Copyright (C) 2008-2011 Nokia Corporation.
 
    @author Raimo Vuonnala <raimo.vuonnala@nokia.com>
    @author Semi Malinen <semi.malinen@nokia.com>

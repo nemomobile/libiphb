@@ -1,3 +1,9 @@
+libiphb (0.61.31) unstable; urgency=low
+
+  * New defines for fixed periods (refix for #253041)
+
+ -- Raimo Vuonnala <raimo.vuonnala@nokia.com>  Thu, 12 May 2011 12:54:28 +0300
+
 libiphb (0.61.30) unstable; urgency=low
 
   * Bump library version (Fixes: NB#253041)

@@ -1,5 +1,5 @@
 # Package name and version
-AC_INIT(libiphb, 0.61.30)
+AC_INIT(libiphb, 0.61.31)
 
 AM_INIT_AUTOMAKE
 

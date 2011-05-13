@@ -62,15 +62,15 @@ iphb_t iphb_open(int *dummy);
    The timeline is divided into "fixed global slots (GS)" (all waiters for a certain slot
    are woken up at the same time (also the lower-value waiters).
  */
-#define IPHB_GS_WAIT_30_SEC      30      //!< 30 second wakeup slot
+#define IPHB_GS_WAIT_30_SEC         30   //!< 30 second wakeup slot
 #define IPHB_GS_WAIT_2_5_MINS (2*60+30)  //!< 2.5 minute wakeup slot, the users of the previous slots wake here as well
 #define IPHB_GS_WAIT_5_MINS   (5*60+30)  //!< 5 minute wakeup slot, the users of the previous slots wake here as well
-#define IPHB_GS_WAIT_10_MINS  (10*60)     //!< 10 minute wakeup slot, the users of the previous slots wake here as well;
+#define IPHB_GS_WAIT_10_MINS  (10*60)    //!< 10 minute wakeup slot, the users of the previous slots wake here as well;
                                          //      you can use any multiplication of IPHB_GS_WAIT_10_MINS, although it
                                          //      is recommended to use these predefined values
-#define IPHB_GS_WAIT_30_MINS (30*60)     //!< 30 minute wakeup slot, the users of the previous slots wake here as well
-#define IPHB_GS_WAIT_1_HOUR  (60*60)     //!< 1 hour wakeup slot, the users of the previous slots wake here as well
-#define IPHB_GS_WAIT_2_HOURS (2*60*60)   //!< 2 hours wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_30_MINS  (30*60)    //!< 30 minute wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_1_HOUR   (60*60)    //!< 1 hour wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_2_HOURS  (2*60*60)  //!< 2 hours wakeup slot, the users of the previous slots wake here as well
 #define IPHB_GS_WAIT_10_HOURS (10*60*60) //!< 10 hours wakeup slot, the users of the previous slots wake here as well
 
 
@@ -94,6 +94,8 @@ iphb_t iphb_open(int *dummy);
 */
 time_t
 iphb_wait(iphb_t iphbh, unsigned short mintime, unsigned short maxtime, int must_wait);
+
+
 
 
 

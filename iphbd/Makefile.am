@@ -3,7 +3,7 @@
 #
 AM_CFLAGS = -Wall -Wmissing-prototypes -std=c99 -Os -g -fPIC
 AM_CPPFLAGS = -D_GNU_SOURCE
-AM_LDFLAGS = -g -Wl,--as-needed
+AM_LDFLAGS = -g -lrt -Wl,--as-needed
 
 ACLOCAL_AMFLAGS = -I m4
 

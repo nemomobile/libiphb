@@ -1,3 +1,10 @@
+libiphb (0.61.32) unstable; urgency=low
+
+  * Fixes: NB#260776 - Scheduled synchronization NOT working with all accounts if device time set to past 
+    - use clock_gettime(clock_gettime(CLOCK_MONOTONIC, ...) instead of time()
+
+ -- Raimo Vuonnala <raimo.vuonnala@nokia.com>  Thu, 09 Jun 2011 10:48:17 +0300
+
 libiphb (0.61.31) unstable; urgency=low
 
   * New defines for fixed periods (refix for #253041)

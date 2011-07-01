@@ -1,3 +1,9 @@
+libiphb (1.0.0) unstable; urgency=low
+
+  * Fix sync time for the 5 mins slot (Fixes: NB#270131)
+
+ -- Matias Muhonen <ext-matias.muhonen@nokia.com>  Fri, 01 Jul 2011 10:51:16 +0000
+
 libiphb (0.61.32) unstable; urgency=low
 
   * Fixes: NB#260776 - Scheduled synchronization NOT working with all accounts if device time set to past 

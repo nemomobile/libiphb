@@ -4,7 +4,7 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: libiphb
-Description: Interface to IP heartbeat service
+Description: Interface to inter-process (IP) heartbeat service
 Version: @VERSION@
 Libs: -L${libdir} -liphb
 Cflags: -I${includedir}

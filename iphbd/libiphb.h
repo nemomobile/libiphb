@@ -64,7 +64,7 @@ iphb_t iphb_open(int *dummy);
  */
 #define IPHB_GS_WAIT_30_SEC         30   //!< 30 second wakeup slot
 #define IPHB_GS_WAIT_2_5_MINS (2*60+30)  //!< 2.5 minute wakeup slot, the users of the previous slots wake here as well
-#define IPHB_GS_WAIT_5_MINS   (5*60+30)  //!< 5 minute wakeup slot, the users of the previous slots wake here as well
+#define IPHB_GS_WAIT_5_MINS   (5*60)     //!< 5 minute wakeup slot, the users of the previous slots wake here as well
 #define IPHB_GS_WAIT_10_MINS  (10*60)    //!< 10 minute wakeup slot, the users of the previous slots wake here as well;
                                          //      you can use any multiplication of IPHB_GS_WAIT_10_MINS, although it
                                          //      is recommended to use these predefined values

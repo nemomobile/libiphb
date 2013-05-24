@@ -1,0 +1,43 @@
+Name: libiphb
+Summary: API for IP Heartbeat service
+Version: 1.0.0
+Release: 0
+Group: System/System Control
+License: LGPLv2+
+URL: http://meego.gitorious.org/meego-middleware/libiphb
+Description: |
+    This package contains C API for using IP Heartbeat service.
+
+Sources:
+    - "%{name}-%{version}.tar.bz2"
+
+PkgConfigBR:
+    - glib-2.0
+    - dsme
+
+UseAsNeeded: no
+
+Files:
+    - "%{_libdir}/libiphb.so.*"
+    - "%doc COPYING AUTHORS INSTALL README NEWS ChangeLog"
+
+SubPackages:
+    - Name: devel
+      Group: Development/Libraries
+      Summary: Development files for IP Heartbeat service
+      Description: |
+        This package contains C headers for the IP Heartbeat API.
+      Files:
+          - "%attr(644,root,root)%{_includedir}/iphbd/*"
+          - "%{_libdir}/libiphb.so"
+          - "%{_libdir}/pkgconfig/libiphb.pc"
+          - "%doc COPYING"
+    - Name: test
+      Group: Development/Tools
+      Summary: Test tool for IP Heartbeat service
+      Description: |
+        Command line utility to test IP Heartbeat functionality.
+      Files:
+          - "%{_bindir}/hbtest"
+          - "%{_bindir}/hbtest2"
+          - "%doc COPYING"

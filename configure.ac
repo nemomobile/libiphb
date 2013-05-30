@@ -4,7 +4,7 @@ AC_INIT(libiphb, 1.0.0)
 AM_INIT_AUTOMAKE
 
 AC_PREREQ([2.61])
-AC_CONFIG_SRCDIR([iphbd/libiphb.c])
+AC_CONFIG_SRCDIR([src/libiphb.c])
 
 # NOTE: Must the LT version must be changed when code is released:
 #  - If interfaces changed/added/removed: lt_current++, lt_rev=0
@@ -60,8 +60,9 @@ AC_CHECK_FUNCS([inet_ntoa memset select socket strerror])
 
 # Create files
 AC_CONFIG_FILES([Makefile
-                 iphbd/Makefile
-                 iphbd/libiphb-uninstalled.pc
-                 iphbd/libiphb.pc])
+                 src/Makefile
+                 src/libiphb-uninstalled.pc
+                 src/libiphb.pc
+                 tests/Makefile])
 
 AC_OUTPUT

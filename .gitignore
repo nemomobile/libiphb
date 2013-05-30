@@ -44,9 +44,9 @@ debian/libiphb0.postinst.debhelper
 debian/libiphb0.postrm.debhelper
 debian/tmp/
 
-iphbd/hbtest
-iphbd/hbtest2
-iphbd/libiphb.pc
-iphbd/libiphb-uninstalled.pc
+tests/hbtest
+tests/hbtest2
+src/libiphb.pc
+src/libiphb-uninstalled.pc
 
 m4/

@@ -62,7 +62,7 @@
 #include <arpa/inet.h>
 #include <netinet/tcp.h>
 
-#include "libiphb.h"
+#include "../src/libiphb.h"
 
 static volatile int run = 1;
 

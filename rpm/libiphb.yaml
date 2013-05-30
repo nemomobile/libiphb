@@ -4,7 +4,7 @@ Version: 1.0.0
 Release: 0
 Group: System/System Control
 License: LGPLv2+
-URL: http://meego.gitorious.org/meego-middleware/libiphb
+URL: http://github.com/nemomobile/libiphb
 Description: |
     This package contains C API for using IP Heartbeat service.
 
@@ -32,12 +32,12 @@ SubPackages:
           - "%{_libdir}/libiphb.so"
           - "%{_libdir}/pkgconfig/libiphb.pc"
           - "%doc COPYING"
-    - Name: test
+    - Name: tests
       Group: Development/Tools
-      Summary: Test tool for IP Heartbeat service
+      Summary: Tests package for IP Heartbeat service
       Description: |
-        Command line utility to test IP Heartbeat functionality.
+        Tests package to test IP Heartbeat functionality.
       Files:
-          - "%{_bindir}/hbtest"
-          - "%{_bindir}/hbtest2"
+          - "/opt/tests/%{name}-tests/bin/hbtest"
+          - "/opt/tests/%{name}-tests/bin/hbtest2"
           - "%doc COPYING"

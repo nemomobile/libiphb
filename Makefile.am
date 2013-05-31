@@ -1,1 +1,1 @@
-SUBDIRS = iphbd
+SUBDIRS = src tests

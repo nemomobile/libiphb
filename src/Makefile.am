@@ -15,15 +15,7 @@ iphbdincludedir = @includedir@/iphbd
 #
 # Build targets
 #
-bin_PROGRAMS = hbtest hbtest2
 lib_LTLIBRARIES = libiphb.la
-
-hbtest_SOURCES = hbtest.c
-hbtest_LDADD = libiphb.la
-
-
-hbtest2_SOURCES = hbtest2.c
-hbtest2_LDADD = libiphb.la
 
 libiphb_la_SOURCES = libiphb.c
 libiphb_la_LDFLAGS = $(AM_LDFLAGS) -shared -version-info $(IPHB_LT_VERSION)

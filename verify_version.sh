@@ -5,10 +5,10 @@
 AC_PATH=configure.ac
 AC_VERS=$(sed '/AC_INIT/!d; s/AC_INIT(libiphb, \(.*\))/\1/' $AC_PATH)
 
-RPM_PATH=rpm/libiphb.spec
+RPM_PATH=${RPM_SOURCE_DIR:-rpm}/${RPM_PACKAGE_NAME:-libiphb}.spec
 RPM_VERS=$(grep '^Version:' $RPM_PATH |sed -e 's/^.*:[[:space:]]*//')
 
-YAML_PATH=rpm/libiphb.yaml
+YAML_PATH=${RPM_SOURCE_DIR:-rpm}/${RPM_PACKAGE_NAME:-libiphb}.yaml
 YAML_VERS=$(grep '^Version:' $YAML_PATH |sed -e 's/^.*:[[:space:]]*//')
 
 RES=0

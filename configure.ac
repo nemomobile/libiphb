@@ -43,6 +43,9 @@ AM_PROG_CC_C_O()
 
 # Pkgconf checks
 PKG_CHECK_MODULES(GLIB, glib-2.0)
+PKG_CHECK_MODULES(DBUS, dbus-1)
+PKG_CHECK_MODULES(DBUSGLIB, dbus-glib-1)
+PKG_CHECK_MODULES(MCE, mce)
 
 # Check libs (that are not yet checked)
 AC_CHECK_LIB([dsme], [dsmesock_init], [AC_MSG_NOTICE([got libdsme])], AC_MSG_FAILURE([libdsme required!]), [$GLIB_LIBS])

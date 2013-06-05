@@ -15,10 +15,14 @@ testbindir = /opt/tests/libiphb-tests/bin
 #
 # Build targets
 #
-testbin_PROGRAMS = hbtest hbtest2
+testbin_PROGRAMS = hbtest hbtest2 hbtest3
  
 hbtest_SOURCES = hbtest.c
 hbtest_LDADD = ../src/libiphb.la
 
 hbtest2_SOURCES = hbtest2.c
 hbtest2_LDADD = ../src/libiphb.la
+
+hbtest3_SOURCES = hbtest3.c
+hbtest3_CFLAGS  = $(AM_CFLAGS) $(DBUS_CFLAGS) $(DBUSGLIB_CFLAGS) $(MCE_CFLAGS)
+hbtest3_LDADD   = ../src/libiphb.la $(DBUSGLIB_LIBS)

@@ -19,7 +19,10 @@ Source100:  libiphb.yaml
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(dsme)
+BuildRequires:  pkgconfig(mce) >= 1.12.3
 
 %description
 This package contains C API for using IP Heartbeat service.
@@ -97,6 +100,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /opt/tests/%{name}-tests/bin/hbtest
 /opt/tests/%{name}-tests/bin/hbtest2
+/opt/tests/%{name}-tests/bin/hbtest3
 %doc COPYING
 # >> files tests
 # << files tests

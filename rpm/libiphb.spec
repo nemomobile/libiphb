@@ -101,6 +101,7 @@ rm -rf %{buildroot}
 /opt/tests/%{name}-tests/bin/hbtest
 /opt/tests/%{name}-tests/bin/hbtest2
 /opt/tests/%{name}-tests/bin/hbtest3
+/opt/tests/%{name}-tests/tests.xml
 %doc COPYING
 # >> files tests
 # << files tests

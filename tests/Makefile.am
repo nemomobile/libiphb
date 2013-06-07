@@ -26,3 +26,10 @@ hbtest2_LDADD = ../src/libiphb.la
 hbtest3_SOURCES = hbtest3.c
 hbtest3_CFLAGS  = $(AM_CFLAGS) $(DBUS_CFLAGS) $(DBUSGLIB_CFLAGS) $(MCE_CFLAGS)
 hbtest3_LDADD   = ../src/libiphb.la $(DBUSGLIB_LIBS)
+
+#
+# Install data
+#
+install-data-local:
+	install -d $(DESTDIR)/opt/tests/libiphb-tests
+	install -m 644 ./tests.xml $(DESTDIR)/opt/tests/libiphb-tests

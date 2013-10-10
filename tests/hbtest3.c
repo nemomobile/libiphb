@@ -26,6 +26,9 @@
 /* How strictly we want to interpret the maximum wakup time */
 #define ALLOWED_DELAY 999 // ms
 
+/* Should we use monotonic time source or system time for timing */
+#define USE_MONOTONIC_TIME 0
+
 typedef struct hbtimer_t hbtimer_t;
 
 /* -- tv -- */
@@ -114,6 +117,9 @@ static void keepalive_test    (int *xc);
 
 static void tv_get_monotime(struct timeval *tv)
 {
+#if USE_MONOTONIC_TIME
+  /* CLOCK_MONOTONIC might not advance while device is suspended
+   * which makes it not ideal for timing waking up from suspend ... */
   struct timespec ts;
 
   if( clock_gettime(CLOCK_MONOTONIC, &ts) < 0 )
@@ -122,6 +128,10 @@ static void tv_get_monotime(struct timeval *tv)
   }
 
   TIMESPEC_TO_TIMEVAL(tv, &ts);
+#else
+  /* The system changes will cause tests to fail */
+  gettimeofday(tv, 0);
+#endif
 }
 
 static int tv_diff_in_ms(const struct timeval *tv1, const struct timeval *tv2)

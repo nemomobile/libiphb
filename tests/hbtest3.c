@@ -1075,23 +1075,22 @@ static void ranges_test(int *xc)
 
   auto void start(int lo, int hi)
   {
-    timer[timers++] = hbtimer_create(scale(lo), scale(hi), 1);
+    timer[timers++] = hbtimer_create(scale(lo)+1, scale(hi), 1);
   }
 
   /* start timers, expected wakeup pattern something like */
-
   //                      0 1 2 3 4 5 6 7 8 9 0 1
-  //                            |           |
-  start(0, 7); // A       AAAAAAAAAAAAAAA   |
-  start(1, 5); // B         BBBBBBBBB       |
-  start(2, 3); // C           CCC           |
-  //                            |           |
-  start(4, 9); // D             | DDDDDDDDDDD
-  start(6,11); // E             |     EEEEEEEEEEE
-  start(8,10); // F             |         FFFFF
-  //                            |           |
+  //                            |         |
+  start(0, 9); // A        AAAAAAAAAAAAAAAAAA
+  start(1, 7); // B          BBBBBBBBBBBB |
+  start(2, 3); // C            CC         |
+  //                            |         |
+  start(5, 8); // D             |    DDDDDD
+  start(6,11); // E             |      EEEEEEEEEE
+  start(7,10); // F             |        FFFFFF
+  //                            |         |
   //                      0 1 2 3 4 5 6 7 8 9 0 1
-  //                            |           |
+  //                            |         |
   //                          group1      group2
 
   /* fail if tests do not finish in time */

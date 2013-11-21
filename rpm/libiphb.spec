@@ -9,7 +9,7 @@ Name:       libiphb
 # << macros
 
 Summary:    API for IP Heartbeat service
-Version:    1.0.2
+Version:    1.1.0
 Release:    0
 Group:      System/System Control
 License:    LGPLv2+

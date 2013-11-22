@@ -47,6 +47,16 @@ struct _iphb_wait_req_t {
   unsigned short mintime;	/*!< minimum wait time in seconds, zero means use default */
   unsigned short maxtime;	/*!< maximum wait time in seconds, zero means use default */
   pid_t          pid;           /*!< client process ID (PID) */
+
+  /* Since 1.1.0 */
+  unsigned char  wakeup;	/*!< Flag for use with dsme internal waits.
+				 *   If set to non-zero value, device will
+				 *   wakeup to handle the internal wakeup
+				 *   instead of handling it while woken up
+				 *   due to external activity. */
+
+  /* Note: The size of this structure can grow up to 64 bytes without causing
+   *       binary compatibility breaks, see struct _iphb_req_t below */
 };
 
 /**@brief Message from iphbd to client ("wake up!") */

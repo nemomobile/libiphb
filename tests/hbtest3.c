@@ -747,7 +747,7 @@ static bool hbtimer_start(hbtimer_t *self)
   {
     goto cleanup;
   }
-  if( iphb_wait(self->iphb_hnd, self->mintime, self->maxtime, 0) < 0 )
+  if( iphb_wait2(self->iphb_hnd, self->mintime, self->maxtime, 0, 1) < 0 )
   {
     goto cleanup;
   }
@@ -1103,8 +1103,16 @@ static void ranges_test(int *xc)
   //                            |         |
   //                          group1      group2
 
+  /* start extra long timer, we do not expect this to trigger */
+  {
+    int d = 24 * 60 * 60;
+    hbtimer_t *t = hbtimer_create(d*3, d*4, 1);
+    t->repeats = 0;
+    timer[timers++] = t;
+  }
+
   /* fail if tests do not finish in time */
-  timeout = g_timeout_add_seconds(scale(11) + 10, failure_cb, &timeout);
+  timeout = g_timeout_add_seconds(scale(11) + 13, failure_cb, &timeout);
 
   if( mainloop_run() )
   {

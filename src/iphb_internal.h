@@ -29,6 +29,7 @@
 #define IPHB_INTERNAL_H
 
 #include <sys/types.h>
+#include <stdint.h>
 
 #define HB_SOCKET_PATH		"/dev/shm/iphb"	    /**@brief IPC path between client and iphbd */
 #define HB_KERNEL_DEVICE        "/dev/iphb"	    /**@brief Device between kernel module and iphbd */
@@ -44,16 +45,28 @@
 
 /**@brief Message from client to iphbd ("wake me up") */
 struct _iphb_wait_req_t {
-  unsigned short mintime;	/*!< minimum wait time in seconds, zero means use default */
-  unsigned short maxtime;	/*!< maximum wait time in seconds, zero means use default */
-  pid_t          pid;           /*!< client process ID (PID) */
+  uint16_t mintime;     /*!< minimum wait time in seconds, zero means use default */
+  uint16_t maxtime;     /*!< maximum wait time in seconds, zero means use default */
+  pid_t    pid;         /*!< client process ID (PID) */
+  // sizeof = 8
 
   /* Since 1.1.0 */
-  unsigned char  wakeup;	/*!< Flag for use with dsme internal waits.
-				 *   If set to non-zero value, device will
-				 *   wakeup to handle the internal wakeup
-				 *   instead of handling it while woken up
-				 *   due to external activity. */
+  uint8_t wakeup;       /*!< Flag for use with dsme internal waits.
+                         *   If set to non-zero value, device will
+                         *   wakeup to handle the internal wakeup
+                         *   instead of handling it while woken up
+                         *   due to external activity. */
+  // sizeof = 9
+
+
+  /* Since 1.2.0 */
+  uint8_t version;	/*!< Request structure version:
+			 *   0 <  1.2.0
+			 *   1 >= 1.2.0
+			 */
+  uint16_t mintime_hi;  /*!< Extend minimum wait time to 32bit range */
+  uint16_t maxtime_hi;  /*!< Extend maximum wait time to 32bit range */
+  // sizeof = 14
 
   /* Note: The size of this structure can grow up to 64 bytes without causing
    *       binary compatibility breaks, see struct _iphb_req_t below */

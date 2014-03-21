@@ -180,11 +180,15 @@ iphb_wait2(iphb_t iphbh, unsigned mintime, unsigned maxtime, int must_wait, int 
 
   /* There are apps that contain out of date libiphb versions built
    * in to the application binaries and we need to at least attempt
-   * not to break handling of iphb requests that used to be ok. The
-   * required assumption is that such out of data code has initialized
-   * the padding in request structure to zero. */
-
-  /* Originally not used, should be implicitly initialized to zero */
+   * not to break handling of iphb requests that used to be ok.
+   *
+   * Originally the version field did not exist, but the area now
+   * occupied by it was initialized to zero. By setting it now to
+   * a non-zero value, we can signal the server side that additional
+   * fields are in use.
+   *
+   * Version 1 adds: mintime_hi, maxtime_hi and wakeup fields
+   */
   req.u.wait.version    = 1;
 
   /* Originally mintime and maxtime were 16 bits wide. As we must

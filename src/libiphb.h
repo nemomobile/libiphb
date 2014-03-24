@@ -96,6 +96,43 @@ time_t
 iphb_wait(iphb_t iphbh, unsigned short mintime, unsigned short maxtime, int must_wait);
 
 
+/**
+   Wait for the next heartbeat.
+
+   There can be only one wakeup / iphb handle. Calling this function cancels
+   any previously programmed wakeup. Using zero for both mintime and maxtime
+   can be used to cancel without programming a new wakeup.
+
+   If mintime == maxtime, a global wakeup slot is used rather than ranged
+   wakeup. To maximize changes of synchronous wakeups the predefined
+   IPHB_GS_WAIT_* values should be used.
+
+   @param iphbh         Handle got from iphb_open
+
+   @param mintime       Time in seconds that MUST be waited before heartbeat
+                        is reacted to.
+
+   @param maxtime       Time in seconds when the wait SHOULD end. It is wise to
+                        have maxtime-mintime quite big to maximize chances that
+                        other iphb clients can be woken up in sync.
+
+   @param must_wait     If non-zero, this functions waits for the wakeup before
+                        returning. Zero value means you need to use select/poll
+                        and wait for the socket to become readable. The file
+                        descriptor to wait for can be queried via iphb_get_fd().
+                        Once the socket comes readable, the incoming data must
+                        be flushed - iphb_discard_wakeups can be used for this.
+
+   @param resume        If nonzero, the device is woken from suspend to end the
+                        wait period. Use zero value if the client process can
+                        wait until the device gets out of suspend for some other
+                        reason.
+
+   @return              Time waited, (time_t)-1 if error (check errno)
+*/
+time_t
+iphb_wait2(iphb_t iphbh, unsigned mintime, unsigned maxtime, int must_wait,
+	   int resume);
 
 
 

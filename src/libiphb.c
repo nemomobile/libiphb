@@ -166,7 +166,7 @@ iphb_get_fd(iphb_t iphbh)
 
 
 time_t
-iphb_wait(iphb_t iphbh, unsigned short mintime, unsigned short maxtime, int must_wait)
+iphb_wait2(iphb_t iphbh, unsigned mintime, unsigned maxtime, int must_wait, int resume)
 {
   struct _iphb_req_t  req = {IPHB_WAIT};
   struct _iphb_wait_resp_t resp = {0};
@@ -178,12 +178,36 @@ iphb_wait(iphb_t iphbh, unsigned short mintime, unsigned short maxtime, int must
 
   (void)suck_data(HB_INST(iphbh)->fd);
 
-  req.u.wait.mintime = mintime;
-  req.u.wait.maxtime = maxtime;
-  req.u.wait.pid = getpid();
+  /* There are apps that contain out of date libiphb versions built
+   * in to the application binaries and we need to at least attempt
+   * not to break handling of iphb requests that used to be ok.
+   *
+   * Originally the version field did not exist, but the area now
+   * occupied by it was initialized to zero. By setting it now to
+   * a non-zero value, we can signal the server side that additional
+   * fields are in use.
+   *
+   * Version 1 adds: mintime_hi, maxtime_hi and wakeup fields
+   */
+  req.u.wait.version    = 1;
+
+  /* Originally mintime and maxtime were 16 bits wide. As we must
+   * keep the structure layout compatible with it, the extension
+   * to 32bit range is done by having upper halfs stored separately.
+   * The Server side ignores upper parts unless version >= 1.  */
+  req.u.wait.mintime    = (mintime >>  0) & 0xffff;
+  req.u.wait.mintime_hi = (mintime >> 16) & 0xffff;
+  req.u.wait.maxtime    = (maxtime >>  0) & 0xffff;
+  req.u.wait.maxtime_hi = (maxtime >> 16) & 0xffff;
+
+  /* Client process id */
+  req.u.wait.pid        = getpid();
+
+  /* The server side ignores this unless version >= 1 */
+  req.u.wait.wakeup     = (resume != 0);
 
   if (send(HB_INST(iphbh)->fd, &req, sizeof(req), MSG_DONTWAIT|MSG_NOSIGNAL) <= 0)
-    return (time_t)-1;    
+    return (time_t)-1;
 
   if (!must_wait)
     return (time_t)0;
@@ -222,6 +246,12 @@ iphb_wait(iphb_t iphbh, unsigned short mintime, unsigned short maxtime, int must
     return resp.waited;
   else
     return (time_t)-1;
+}
+
+time_t
+iphb_wait(iphb_t iphbh, unsigned short mintime, unsigned short maxtime, int must_wait)
+{
+  return iphb_wait2(iphbh, mintime, maxtime, must_wait, 1);
 }
 
 

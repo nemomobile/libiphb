@@ -1,3 +1,11 @@
+libiphb (1.2.0) unstable; urgency=low
+
+  * [libiphb] Support 32bit iphb wakeup ranges. Contributes to JB#16116
+  * [tests] Use LGPLv2.1 license for hbtest3
+  * [libiphb] Set COPYING to GNU Lesser General Public License, version 2.1
+
+ -- Simo Piiroinen <simo.piiroinen@jollamobile.com>  Mon, 24 Mar 2014 12:40:34 +0200
+
 libiphb (1.0.0) unstable; urgency=low
 
   * Fix sync time for the 5 mins slot (Fixes: NB#270131)

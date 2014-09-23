@@ -171,7 +171,7 @@ iphb_wait2(iphb_t iphbh, unsigned mintime, unsigned maxtime, int must_wait, int 
   struct _iphb_req_t  req = {IPHB_WAIT};
   struct _iphb_wait_resp_t resp = {0};
 
-  if (!iphbh || mintime > maxtime || maxtime == 0) {
+  if( !iphbh || mintime > maxtime ) {
     errno = EINVAL;
     return (time_t)-1;
   }

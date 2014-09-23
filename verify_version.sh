@@ -37,6 +37,13 @@ if [ -f $YAML_PATH ]; then
   fi
 fi
 
+# Having debian/changelog out of sync is not a show stopper
+DEB_PATH=debian/changelog
+DEB_VERS=$(head -1 $DEB_PATH | sed -e 's/^.*(//' -e 's/).*$//')
+if [ "$DEB_VERS" != "$AC_VERS" ]; then
+  echo >&2 "$AC_PATH=$AC_VERS vs $DEB_PATH=$DEB_VERS (ignoring)"
+fi
+
 if [ $RES != 0 ]; then
   echo >&2 "Conflicting package versions"
 fi

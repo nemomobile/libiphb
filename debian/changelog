@@ -1,3 +1,10 @@
+libiphb (1.2.1) unstable; urgency=low
+
+  * [libiphb] Allow canceling of iphb wakeups by iphb_wait() with zero
+    wakeup range. Fixes JB#20629
+
+ -- Simo Piiroinen <simo.piiroinen@jollamobile.com>  Tue, 23 Sep 2014 08:30:29 +0300
+
 libiphb (1.2.0) unstable; urgency=low
 
   * [libiphb] Support 32bit iphb wakeup ranges. Contributes to JB#16116

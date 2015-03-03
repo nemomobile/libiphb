@@ -1,3 +1,10 @@
+libiphb (1.2.2) unstable; urgency=low
+
+  * [libiphb] Remove unuseful extra long wait from ranged waits test.
+    Fixes JB#26784
+
+ -- Simo Piiroinen <simo.piiroinen@jollamobile.com>  Tue, 03 Mar 2015 14:52:09 +0200
+
 libiphb (1.2.1) unstable; urgency=low
 
   * [libiphb] Allow canceling of iphb wakeups by iphb_wait() with zero

@@ -25,18 +25,6 @@ if [ "$SPEC_VERS" != "$AC_VERS" ]; then
   fi
 fi
 
-# The yaml file is included in the git tree, but might not be available
-# when making package build via OBS ...
-YAML_PATH=${RPM_SOURCE_DIR:-rpm}/${RPM_PACKAGE_NAME:-libiphb}.yaml
-
-if [ -f $YAML_PATH ]; then
-  YAML_VERS=$(grep '^Version:' $YAML_PATH |sed -e 's/^.*:[[:space:]]*//')
-  if [ "$YAML_VERS" != "$AC_VERS" ]; then
-    echo >&2 "$AC_PATH=$AC_VERS vs $YAML_PATH=$YAML_VERS"
-    RES=1
-  fi
-fi
-
 # Having debian/changelog out of sync is not a show stopper
 DEB_PATH=debian/changelog
 DEB_VERS=$(head -1 $DEB_PATH | sed -e 's/^.*(//' -e 's/).*$//')

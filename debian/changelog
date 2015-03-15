@@ -1,3 +1,9 @@
+libiphb (1.2.3) unstable; urgency=low
+
+  * [packaging] Remove old spectacle cruft. Fixes JB#26919
+
+ -- Simo Piiroinen <simo.piiroinen@jollamobile.com>  Sun, 15 Mar 2015 11:49:05 +0200
+
 libiphb (1.2.2) unstable; urgency=low
 
   * [libiphb] Remove unuseful extra long wait from ranged waits test.

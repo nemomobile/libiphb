@@ -88,7 +88,7 @@ int
 iphb_I_woke_up(iphb_t iphbh)
 {
   int st;
-  struct _iphb_req_t  req = {IPHB_WAIT};
+  struct _iphb_req_t  req = { .cmd = IPHB_WAIT, };
 
   if (!iphbh) {
     errno = EINVAL;
@@ -168,8 +168,8 @@ iphb_get_fd(iphb_t iphbh)
 time_t
 iphb_wait2(iphb_t iphbh, unsigned mintime, unsigned maxtime, int must_wait, int resume)
 {
-  struct _iphb_req_t  req = {IPHB_WAIT};
-  struct _iphb_wait_resp_t resp = {0};
+  struct _iphb_req_t  req = { .cmd = IPHB_WAIT, };
+  struct _iphb_wait_resp_t resp = { .waited = 0, };
 
   if( !iphbh || mintime > maxtime ) {
     errno = EINVAL;
@@ -270,7 +270,7 @@ iphb_discard_wakeups(iphb_t iphbh)
 
 int iphb_get_stats(iphb_t iphbh, struct iphb_stats *stats)
 {
-  struct _iphb_req_t  req = {IPHB_STAT};
+  struct _iphb_req_t  req = { .cmd = IPHB_STAT, };
   int bytes = -1;
 
   if (!iphbh) {

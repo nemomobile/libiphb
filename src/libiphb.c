@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <limits.h>
 #include <errno.h>
 #include <time.h>
 #include <sys/types.h>
@@ -168,15 +169,19 @@ iphb_get_fd(iphb_t iphbh)
 time_t
 iphb_wait2(iphb_t iphbh, unsigned mintime, unsigned maxtime, int must_wait, int resume)
 {
-  struct _iphb_req_t  req = { .cmd = IPHB_WAIT, };
-  struct _iphb_wait_resp_t resp = { .waited = 0, };
+  /* Assume failure */
+  time_t result = -1;
 
+  /* Sanity check arguments */
   if( !iphbh || mintime > maxtime ) {
     errno = EINVAL;
-    return (time_t)-1;
+    goto EXIT;
   }
 
+  /* Clear any pending wakeups we might have available */
   (void)suck_data(HB_INST(iphbh)->fd);
+
+  struct _iphb_req_t  req = { .cmd = IPHB_WAIT, };
 
   /* There are apps that contain out of date libiphb versions built
    * in to the application binaries and we need to at least attempt
@@ -206,46 +211,104 @@ iphb_wait2(iphb_t iphbh, unsigned mintime, unsigned maxtime, int must_wait, int 
   /* The server side ignores this unless version >= 1 */
   req.u.wait.wakeup     = (resume != 0);
 
-  if (send(HB_INST(iphbh)->fd, &req, sizeof(req), MSG_DONTWAIT|MSG_NOSIGNAL) <= 0)
-    return (time_t)-1;
+  int rc = send(HB_INST(iphbh)->fd, &req, sizeof req,
+                MSG_DONTWAIT|MSG_NOSIGNAL);
 
-  if (!must_wait)
-    return (time_t)0;
+  if( rc == -1 ) {
+    /* Use errno from send() */
+    goto EXIT;
+  }
 
-  fd_set 		readfds;
-  struct timeval        timeout;
-  struct timespec       ts_then;
-  struct timespec       ts_now;
-  int    		st;
+  if( !must_wait ) {
+    /* Request succesfully sent */
+    result = 0;
+    goto EXIT;
+  }
 
+  /* Get current time at start of wait */
+  struct timespec ts = { 0, 0 };
+  clock_gettime(CLOCK_MONOTONIC, &ts);
 
-  (void)clock_gettime(CLOCK_MONOTONIC, &ts_then);
+  time_t t_beg = ts.tv_sec;
 
-  timeout.tv_sec = maxtime;
-  timeout.tv_usec = 0;
+  for( ;; ) {
+    fd_set         readfds;
+    struct timeval timeout;
 
-  for (;;) {
+    time_t t_now = ts.tv_sec;
+
+    /* We know time_t is signed. Assume it is integer and
+     * cpu uses two's complement arithmetics, i.e.
+     *
+     * new_timestamp - old_timestamp of signed N-bit values
+     * gives valid unsigned delta of N bits.
+     *
+     * Further assume that an unsigned int can hold at least
+     * 32 bits of that delta, which should keep us from
+     * hitting numerical overflows as long as wait times
+     * stay under 68 years or so.
+     */
+    unsigned waited = (unsigned)(t_now - t_beg);
+
+    if( waited >= maxtime ) {
+      /* Make it look like we got wakeup from server
+       * after the specified wait time is up.
+       *
+       * Note: The server side wakeups are likely to be sent
+       *       anyway - which might cause extra wakeups if an
+       *       input watch / similar is used for this socket.
+       */
+      result = (time_t)waited;
+      goto EXIT;
+    }
+
+    /* Assume time_t can hold INT_MAX and cap individual
+     * wait-for-input timeouts to that */
+    unsigned waittime = maxtime - waited;
+
+    if( waittime < INT_MAX )
+      timeout.tv_sec  = (time_t)waittime;
+    else
+      timeout.tv_sec  = (time_t)INT_MAX;
+    timeout.tv_usec = 0;
+
     FD_ZERO(&readfds);
     FD_SET(HB_INST(iphbh)->fd, &readfds);
-    st = select(HB_INST(iphbh)->fd + 1, &readfds, NULL, NULL, &timeout);
 
-    (void)clock_gettime(CLOCK_MONOTONIC, &ts_now);
+    rc = select(HB_INST(iphbh)->fd + 1, &readfds, NULL, NULL, &timeout);
 
-    if (st == -1 && errno == EINTR) {
-	if (ts_now.tv_sec - ts_then.tv_sec < maxtime) {
-	  timeout.tv_sec = maxtime - (ts_now.tv_sec - ts_then.tv_sec);
-	  continue;  
-	}
+    if( rc > 0 ) {
+      struct _iphb_wait_resp_t resp = { .waited = 0, };
+
+      /* Got input, result is: wakeup or error */
+      rc = recv(HB_INST(iphbh)->fd, &resp, sizeof resp, MSG_WAITALL);
+
+      if( rc == (ssize_t)sizeof resp ) {
+        /* Wakeup succesfully read */
+        result = resp.waited;
+      }
+      else if( rc >= 0 ) {
+        /* Unexpected EOF / partial read */
+        errno = EIO;
+      }
+      else {
+        /* Use errno from recv() */
+      }
+
+      goto EXIT;
     }
-    break;
-  }
-  if (st == 0) /* timeout */
-    return ts_now.tv_sec - ts_then.tv_sec;
 
-  if (recv(HB_INST(iphbh)->fd, &resp, sizeof(resp), MSG_WAITALL) > 0)
-    return resp.waited;
-  else
-    return (time_t)-1;
+    if( rc == -1 && errno != EINTR ) {
+      /* Use errno from select() */
+      goto EXIT;
+    }
+
+    /* Update current time and try again */
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+  }
+
+EXIT:
+  return result;
 }
 
 time_t

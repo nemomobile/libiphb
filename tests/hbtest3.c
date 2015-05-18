@@ -1150,6 +1150,7 @@ static void ranges_test(int *xc)
 /** Issue cpu keepalive at start of wakeup */
 static void keepalive_start_cb(hbtimer_t *self)
 {
+  (void)self;
   log_debug("@ %s()", __FUNCTION__);
   xmce_cpu_keepalive_start();
 }
@@ -1157,6 +1158,7 @@ static void keepalive_start_cb(hbtimer_t *self)
 /** ... renew it periodically */
 static void keepalive_renew_cb(hbtimer_t *self)
 {
+  (void)self;
   log_debug("@ %s()", __FUNCTION__);
   xmce_cpu_keepalive_start();
 }
@@ -1164,6 +1166,7 @@ static void keepalive_renew_cb(hbtimer_t *self)
 /** ... and terminate before going back to sleep */
 static void keepalive_stop_cb(hbtimer_t *self)
 {
+  (void)self;
   log_debug("@ %s()", __FUNCTION__);
   xmce_cpu_keepalive_stop();
 }

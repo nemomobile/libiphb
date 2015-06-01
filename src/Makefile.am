@@ -1,7 +1,7 @@
 #
 # Generic options
 #
-AM_CFLAGS = -Wall -Wmissing-prototypes -std=c99 -Os -g -fPIC
+AM_CFLAGS = -Wall -Wextra -Wmissing-prototypes -std=c99 -Os -g -fPIC
 AM_CPPFLAGS = -D_GNU_SOURCE
 AM_LDFLAGS = -g -lrt -Wl,--as-needed
 

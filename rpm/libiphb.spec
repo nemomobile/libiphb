@@ -1,6 +1,6 @@
 Name:       libiphb
 Summary:    API for IP Heartbeat service
-Version:    1.2.3
+Version:    1.2.4
 Release:    0
 Group:      System/System Control
 License:    LGPLv2+
